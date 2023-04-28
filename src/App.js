@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./styles.css";
+import  { React, useState } from "react";
 
-function App() {
+import {
+  AmityUiKitProvider,
+  AmityUiKitSocial,
+  AmityUiKitChat,
+} from "@amityco/ui-kit";
+import Login from "./Login";
+
+
+const apiKey = "b3babb0b3a89f4341d31dc1a01091edcd70f8de7b23d697f";
+export default function App() {
+
+  const [userId, setUserId] = useState();
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      {!userId ? (
+        <Login onSubmit={setUserId} />
+      ) : (
+        <AmityUiKitProvider
+          key={userId}
+          apiKey={apiKey}
+          apiRegion={'sg'}
+          apiEndpoint="https://api.sg.amity.co"
+          userId={userId}
+          displayName={userId}
         >
-          Learn React
-        </a>
-      </header>
+
+          <AmityUiKitChat />
+        </AmityUiKitProvider>
+      )}
     </div>
   );
 }
-
-export default App;
